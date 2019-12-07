@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.brunoalmeida.movies.R
 import com.brunoalmeida.movies.data.model.Movie
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_item.view.*
 
 class MoviesAdapter(
@@ -32,7 +33,8 @@ class MoviesAdapter(
         fun bindView(movie: Movie) {
             title.text = movie.title
             releaseDate.text = movie.releaseDate
-
+            val url = "http://image.tmdb.org/t/p/w185" + movie.posterPath
+            Picasso.get().load(url).into(itemView.moviePoster)
             itemView.setOnClickListener {
                 onItemClickListener.invoke(movie)
             }
