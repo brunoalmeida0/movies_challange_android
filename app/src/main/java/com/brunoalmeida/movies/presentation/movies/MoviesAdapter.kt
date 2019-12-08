@@ -8,6 +8,11 @@ import com.brunoalmeida.movies.R
 import com.brunoalmeida.movies.data.model.Movie
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_item.view.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import android.content.Context
+
+
+
 
 class MoviesAdapter(
     private val movies: List<Movie>,
@@ -44,4 +49,5 @@ class MoviesAdapter(
             }
         }
     }
+
 }
