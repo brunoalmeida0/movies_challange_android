@@ -1,11 +1,10 @@
 package com.brunoalmeida.movies.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.io.Serializable
 
 @Entity(tableName = "movie")
+//@TypeConverters(Converters::class)
 data class Movie(
     @PrimaryKey
     val uuid: Int,
@@ -26,5 +25,21 @@ data class Movie(
     val voteAverage: String?
 
 //    @ColumnInfo(name = "genre_ids")
-//    val genreIds: ArrayList<String> = arrayListOf()
+//    val genreIds: String?
 ) : Serializable
+//
+//class Converters {
+//    @TypeConverter
+//    fun fromString(value: String): ArrayList<String> {
+//        val listType = object : TypeToken<ArrayList<String>>() {
+//
+//        }.type
+//        return Gson().fromJson(value, listType)
+//    }
+//
+//    @TypeConverter
+//    fun fromArrayLisr(list: ArrayList<String>): String {
+//        val gson = Gson()
+//        return gson.toJson(list)
+//    }
+//}

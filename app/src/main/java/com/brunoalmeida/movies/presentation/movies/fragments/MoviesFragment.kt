@@ -1,15 +1,11 @@
 package com.brunoalmeida.movies.presentation.movies.fragments
 
-import android.app.SearchManager
-import android.content.ComponentName
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.brunoalmeida.movies.presentation.movies.MoviesAdapter
 import com.brunoalmeida.movies.ui.main.MovieDetailsActivity
 import com.brunoalmeida.movies.presentation.movies.MoviesViewModel
@@ -62,7 +58,6 @@ class MoviesFragment : Fragment() {
                 }
             }
         })
-//        viewModel.searchMovies("avengers") // TODO adicionar pesquisa aqui
         viewModel.getMovies(page, this@MoviesFragment)
 
 
@@ -100,9 +95,13 @@ class MoviesFragment : Fragment() {
             }
         })
 
-        searchButton.setOnClickListener({
+        searchButton.setOnClickListener {
+            if(querySearch != "") {
             viewModel.searchMovies(1, querySearch, this@MoviesFragment)
-        })
+            } else {
+                viewModel.getMovies(1, this@MoviesFragment)
+            }
+        }
 
         searchView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}

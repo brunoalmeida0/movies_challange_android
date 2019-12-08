@@ -74,9 +74,10 @@ class MoviesViewModel : ViewModel() {
                         title = payload.title,
                         releaseDate = payload.releaseDate,
                         posterPath = payload.posterPath,
-                        uuid = payload.id,
+                        uuid = payload.uuid,
                         overview = payload.overview,
                         voteAverage = payload.voteAverage
+//                        genreIds = payload.genreIds.toString()
                     )
 
                     movies.add(movie)
@@ -106,6 +107,7 @@ class MoviesViewModel : ViewModel() {
                     uuid = payload.uuid,
                     overview = payload.overview,
                     voteAverage = payload.voteAverage
+//                    genreIds = payload.genreIds.toString()
                 )
 
                 favoritesMovies.add(movie)

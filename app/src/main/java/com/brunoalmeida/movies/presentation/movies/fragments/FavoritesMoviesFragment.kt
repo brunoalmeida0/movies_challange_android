@@ -56,9 +56,13 @@ class FavoritesMoviesFragment : Fragment() {
         })
         viewModel.getFavoritesMovies(null)
 
-        searchButtonFavorites.setOnClickListener({
-            viewModel.getFavoritesMovies(querySearch)
-        })
+        searchButtonFavorites.setOnClickListener {
+            if (querySearch != "") {
+                viewModel.getFavoritesMovies(querySearch)
+            } else {
+                viewModel.getFavoritesMovies(null)
+            }
+        }
 
         searchViewFavorites.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}

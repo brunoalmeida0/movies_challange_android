@@ -2,11 +2,12 @@ package com.brunoalmeida.movies.data.response
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+//import com.google.gson.annotations.SerializedName
 
 @JsonClass(generateAdapter = true)
 data class MovieResponse (
     @Json(name = "id")
-    val id: Int,
+    val uuid: Int,
 
     @Json(name = "title")
     val title: String,
@@ -22,7 +23,7 @@ data class MovieResponse (
 
     @Json(name = "vote_average")
     val voteAverage: String?
-
+//
 //    @Json(name = "genre_ids")
 //    val genreIds: ArrayList<String>?
 )
