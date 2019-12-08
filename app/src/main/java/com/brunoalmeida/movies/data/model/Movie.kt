@@ -3,6 +3,7 @@ package com.brunoalmeida.movies.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "movie")
 data class Movie(
@@ -25,5 +26,5 @@ data class Movie(
     val voteAverage: String?
 
 //    @ColumnInfo(name = "genre_ids")
-//    val genreIds: ArrayList<String>?
-)
+//    val genreIds: ArrayList<String> = arrayListOf()
+) : Serializable

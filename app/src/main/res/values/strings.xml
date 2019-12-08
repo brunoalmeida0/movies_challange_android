@@ -7,7 +7,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Details Fragment -->
-    <string name="book_details_title_label">Title</string>
-    <string name="book_details_Release_label">Release Date</string>
+    <string name="movie_details_title_label">Titulo</string>
+    <string name="movie_details_release_label">Data de lançamento</string>
+    <string name="movie_details_overview_label">Sinopse</string>
+    <string name="movie_details_vote_average_label">Nota</string>
     <string name="title_activity_movie_details">MovieDetailsActivity</string>
 </resources>

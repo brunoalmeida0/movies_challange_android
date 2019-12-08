@@ -6,20 +6,52 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.brunoalmeida.movies.R
+import com.brunoalmeida.movies.presentation.movies.MoviesAdapter
+import com.brunoalmeida.movies.presentation.movies.MoviesViewModel
+import com.brunoalmeida.movies.ui.main.MovieDetailsActivity
+import kotlinx.android.synthetic.main.fragment_main.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class FavoritesMoviesFragment : Fragment() {
+
+    private lateinit var viewModel: MoviesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites_movies, container, false)
+        return inflater.inflate(R.layout.fragment_main, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel = ViewModelProviders.of(this).get(MoviesViewModel::class.java)
+
+        viewModel.favoritesMoviesLiveData.observe(this, Observer {
+            it?.let { movies ->
+                with(recycleMovies) {
+                    layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                    setHasFixedSize(true)
+                    adapter = MoviesAdapter(movies) { movie ->
+                        val intent =
+                            MovieDetailsActivity.getStartIntent(
+                                context,
+                                movie
+                            )
+
+                        this@FavoritesMoviesFragment.startActivity(intent)
+
+                    }
+                }
+            }
+        })
+        viewModel.getFavoritesMovies()
+
     }
 
 

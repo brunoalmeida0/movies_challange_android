@@ -13,6 +13,7 @@ class MoviesAdapter(
     private val movies: List<Movie>,
     private val onItemClickListener: ((movie: Movie) -> Unit)
 ) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
@@ -25,7 +26,10 @@ class MoviesAdapter(
         viewHolder.bindView(movies[position])
     }
 
-    class MoviesViewHolder(itemView: View, private val onItemClickListener: ((movie: Movie) -> Unit)) :
+    class MoviesViewHolder(
+        itemView: View,
+        private val onItemClickListener: ((movie: Movie) -> Unit)
+    ) :
         RecyclerView.ViewHolder(itemView) {
         private val title = itemView.textTitle
         private val releaseDate = itemView.textReleaseDate

@@ -8,9 +8,9 @@ import retrofit2.http.Query
 interface MDBServices {
 
     @GET("movie/popular?api_key=1c965a2c8cbf7c08479498052276521b&language=en-US&page=1")
-    fun getBooks(
-//        @Query("api-key") apiKey: String = "riFAGsoTEEUGIuxWXWFIZab4ZSfFcbsF",
-//        @Query("list") list: String = "hardcover-fiction"
-    ): Call<PayloadResponse>
+    fun getMovies(): Call<PayloadResponse>
+
+    @GET("search/multi?api_key=1c965a2c8cbf7c08479498052276521b")
+    fun getMoviesSearch(@Query("query") key: String): Call<List<PayloadResponse>>
 
 }

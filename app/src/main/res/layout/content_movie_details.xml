@@ -10,15 +10,21 @@
     tools:context=".ui.main.MovieDetailsActivity"
     tools:showIn="@layout/activity_movie_details">
 
+    <ImageView
+        android:id="@+id/moviePoster"
+        android:layout_width="185dp"
+        android:layout_height="185dp"
+        android:contentDescription="Poster do filme" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/book_details_title_label"
+        android:text="@string/movie_details_title_label"
         android:textColor="#000"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/bookDetailsTitle"
+        android:id="@+id/movieTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000"
@@ -28,15 +34,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/book_details_Release_label"
+        android:text="@string/movie_details_overview_label"
         android:textColor="#000"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/bookDetailsDescription"
+        android:id="@+id/movieOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000"
         tools:text="Description 1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/movie_details_vote_average_label"
+        android:textColor="#000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/movieVoteAverage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        tools:text="9.8" />
 
 </LinearLayout>

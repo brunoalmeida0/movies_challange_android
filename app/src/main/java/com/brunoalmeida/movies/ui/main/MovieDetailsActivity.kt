@@ -7,9 +7,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.brunoalmeida.movies.R
 import com.brunoalmeida.movies.data.model.Movie
+import com.squareup.picasso.Picasso
 
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.content_movie_details.*
+import kotlinx.android.synthetic.main.movie_item.view.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -18,35 +20,28 @@ class MovieDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie_details)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            val movietest = Movie(
-                uuid = 1235,
-                title = "title teste",
-                releaseDate = "teste release date",
-                posterPath = "poster path teste",
-                overview = "overview teste",
-                voteAverage = "vote average teste"
-//            genreIds = arrayListOf("Teste", "teste2")
-            )
+        val movie = intent.getSerializableExtra(MOVIE) as Movie
 
-            MainActivity.database?.movieDao()?.insertMovies(movietest)
-            val teste = MainActivity.database?.movieDao()?.getMovies()
-            Log.d("TESTE_FILME_FAVORITO", "filme salvo como favorito ao clicatar no floatbuttom" + teste);
+        movieTitle.text = movie.title
+        movieOverview.text = movie.overview
+        movieVoteAverage.text = movie.voteAverage
+        val url = "http://image.tmdb.org/t/p/w185" + movie.posterPath
+
+        Picasso.get().load(url).into(moviePoster)
+
+        fab.setOnClickListener { view ->
+            MainActivity.database?.movieDao()?.insertMovies(movie)
         }
 
-        bookDetailsTitle.text = intent.getStringExtra(EXTRA_TITLE)
-        bookDetailsDescription.text = intent.getStringExtra(EXTRA_DESCRIPTION)
     }
 
 
     companion object {
-        private const val EXTRA_TITLE = "EXTRA_TITLE"
-        private const val EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION"
+        private const val MOVIE = "MOVIE"
 
-        fun getStartIntent(context: Context, title: String, description: String): Intent {
+        fun getStartIntent(context: Context, movie: Movie): Intent {
             return Intent(context, MovieDetailsActivity::class.java).apply {
-                putExtra(EXTRA_TITLE, title)
-                putExtra(EXTRA_DESCRIPTION, description)
+                putExtra(MOVIE, movie)
             }
         }
 
