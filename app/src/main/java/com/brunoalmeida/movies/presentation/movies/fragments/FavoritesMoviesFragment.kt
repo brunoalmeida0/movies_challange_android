@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,8 +36,18 @@ class FavoritesMoviesFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         viewModel = ViewModelProviders.of(this).get(MoviesViewModel::class.java)
-
+        progressFavorites.visibility = ProgressBar.VISIBLE
         viewModel.favoritesMoviesLiveData.observe(this, Observer {
+            if(it.isNotEmpty()) {
+                recycleMoviesFavorites.visibility = View.VISIBLE
+                emptyViewFavorites.visibility = View.GONE
+            } else {
+                emptyViewFavorites.text = getString(R.string.empty_list_movie)
+                recycleMoviesFavorites.visibility = View.GONE
+                emptyViewFavorites.visibility = View.VISIBLE
+            }
+            progressFavorites.visibility = ProgressBar.GONE
+
             it?.let { movies ->
                 with(recycleMoviesFavorites) {
                     layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -49,7 +60,6 @@ class FavoritesMoviesFragment : Fragment() {
                             )
 
                         this@FavoritesMoviesFragment.startActivity(intent)
-
                     }
                 }
             }

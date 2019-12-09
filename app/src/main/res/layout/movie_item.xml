@@ -9,7 +9,7 @@
         android:id="@+id/moviePoster"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:contentDescription="Poster do filme"
+        android:contentDescription="@string/poster_movie"
         />
 
     <TextView

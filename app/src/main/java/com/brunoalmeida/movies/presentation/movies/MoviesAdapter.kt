@@ -10,8 +10,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_item.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.content.Context
-
-
+import com.brunoalmeida.movies.BuildConfig
 
 
 class MoviesAdapter(
@@ -42,8 +41,7 @@ class MoviesAdapter(
         fun bindView(movie: Movie) {
             title.text = movie.title
             releaseDate.text = movie.releaseDate
-            val url = "http://image.tmdb.org/t/p/w185" + movie.posterPath
-            Picasso.get().load(url).into(itemView.moviePoster)
+            Picasso.get().load(BuildConfig.URL_POSTER + movie.posterPath).into(itemView.moviePoster)
             itemView.setOnClickListener {
                 onItemClickListener.invoke(movie)
             }

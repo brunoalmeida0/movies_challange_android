@@ -22,8 +22,8 @@ data class MovieResponse (
     val overview: String,
 
     @Json(name = "vote_average")
-    val voteAverage: String?
-//
-//    @Json(name = "genre_ids")
-//    val genreIds: ArrayList<String>?
+    val voteAverage: String?,
+
+    @Json(name = "genre_ids")
+    val genreIds: List<String>?
 )

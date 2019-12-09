@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.brunoalmeida.movies.R
@@ -13,18 +12,15 @@ import com.squareup.picasso.Picasso
 
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import kotlinx.android.synthetic.main.content_movie_details.*
-import kotlinx.android.synthetic.main.movie_item.view.*
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.MenuItem
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
+import com.brunoalmeida.movies.presentation.genders.GendersViewModel
 
 
 class MovieDetailsActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: GendersViewModel
     var isFavorite: Boolean = false
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -48,9 +44,18 @@ class MovieDetailsActivity : AppCompatActivity() {
             isFavorite = true
         }
 
+        viewModel = ViewModelProviders.of(this).get(GendersViewModel::class.java)
+
+
+        val genresFormart = movie.genreIds!!.replace("[", "").replace("]", "").replace(" ", "").split(",")
+        viewModel.getGenreById(genresFormart)
+
         movieOverview.text = movie.overview
         movieVoteAverage.text = movie.voteAverage
-        val url = "http://image.tmdb.org/t/p/w185" + movie.posterPath
+        viewModel.genresLiveData.value!!.forEach {
+            movieGenders.text = it.name + ", " + movieGenders.text.toString()
+        }
+        val url = "https://image.tmdb.org/t/p/w780" + movie.posterPath
 
         Picasso.get().load(url).into(moviePoster)
 
@@ -60,27 +65,32 @@ class MovieDetailsActivity : AppCompatActivity() {
             if (isFavorite) {
                 movieDAO.deleteMovie(movie)
                 fab.setImageResource(android.R.drawable.star_off)
+                isFavorite = false
+                val toast = Toast.makeText(applicationContext, "Filme removido da sua lista de favoritos", Toast.LENGTH_LONG)
+                toast.show()
             } else {
                 movieDAO.insertMovies(movie)
                 fab.setImageResource(android.R.drawable.star_on)
+                isFavorite = true
 
+                val toast = Toast.makeText(applicationContext, "Filme adicionado na sua lista de favoritos", Toast.LENGTH_LONG)
+                toast.show()
             }
 
         }
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean { //Botão adicional na ToolBar
-        when (item.getItemId()) {
-            android.R.id.home  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-            -> {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
                 startActivity(
                     Intent(
                         this,
                         MainActivity::class.java
                     )
-                )  //O efeito ao ser pressionado do botão (no caso abre a activity)
-                finishAffinity()  //Método para matar a activity e não deixa-lá indexada na pilhagem
+                )
+                finishAffinity()
             }
             else -> {
             }
@@ -88,14 +98,14 @@ class MovieDetailsActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onBackPressed() { //Botão BACK padrão do android
+    override fun onBackPressed() {
         startActivity(
             Intent(
                 this,
                 MainActivity::class.java
             )
-        ) //O efeito ao ser pressionado do botão (no caso abre a activity)
-        finishAffinity() //Método para matar a activity e não deixa-lá indexada na pilhagem
+        )
+        finishAffinity()
         return
     }
 
@@ -107,7 +117,6 @@ class MovieDetailsActivity : AppCompatActivity() {
                 putExtra(MOVIE, movie)
             }
         }
-
     }
 
 }

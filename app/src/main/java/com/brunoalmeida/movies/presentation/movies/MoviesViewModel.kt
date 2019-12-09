@@ -1,13 +1,8 @@
 package com.brunoalmeida.movies.presentation.movies
 
-import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.room.Query
-import androidx.room.Room
 import com.brunoalmeida.movies.data.APIService
-import com.brunoalmeida.movies.data.AppDatabase
 import com.brunoalmeida.movies.data.model.Movie
 import com.brunoalmeida.movies.data.response.PayloadResponse
 import com.brunoalmeida.movies.presentation.movies.fragments.MoviesFragment
@@ -18,14 +13,10 @@ import retrofit2.Response
 
 class MoviesViewModel : ViewModel() {
 
-    private val _index = MutableLiveData<Int>()
     val moviesLiveData: MutableLiveData<List<Movie>> = MutableLiveData()
     val favoritesMoviesLiveData: MutableLiveData<List<Movie>> = MutableLiveData()
 
-    fun setIndex(index: Int) {
-        _index.value = index
-    }
-
+    @Throws(Exception::class)
     fun getMovies(page: Int, moviesFragment: MoviesFragment) {
         APIService.service.getMovies(page.toString()).enqueue(object : Callback<PayloadResponse> {
             override fun onResponse(
@@ -36,7 +27,7 @@ class MoviesViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<PayloadResponse>, t: Throwable) {
-                //TODO fazer tratamento de erro
+                throw Exception(t.message)
             }
 
         })
@@ -54,7 +45,7 @@ class MoviesViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<PayloadResponse>, t: Throwable) {
-                    //TODO fazer tratamento de erro
+                    throw Exception(t.message)
                 }
 
             })
@@ -76,8 +67,8 @@ class MoviesViewModel : ViewModel() {
                         posterPath = payload.posterPath,
                         uuid = payload.uuid,
                         overview = payload.overview,
-                        voteAverage = payload.voteAverage
-//                        genreIds = payload.genreIds.toString()
+                        voteAverage = payload.voteAverage,
+                        genreIds = payload.genreIds.toString()
                     )
 
                     movies.add(movie)
@@ -106,8 +97,8 @@ class MoviesViewModel : ViewModel() {
                     posterPath = payload.posterPath,
                     uuid = payload.uuid,
                     overview = payload.overview,
-                    voteAverage = payload.voteAverage
-//                    genreIds = payload.genreIds.toString()
+                    voteAverage = payload.voteAverage,
+                    genreIds = payload.genreIds.toString()
                 )
 
                 favoritesMovies.add(movie)

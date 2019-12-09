@@ -28,30 +28,27 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Pesquisar"
+        android:hint="@string/search_for_name_or_year"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/searchButtonFavorites"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:imeOptions="actionNext"/>
 
     <Button
         android:id="@+id/searchButtonFavorites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:layout_marginStart="16dp"
-        android:hint="Q"
-        app:srcCompat="@android:drawable/ic_menu_search"
+        android:layout_marginEnd="16dp"
+        android:background="@android:drawable/ic_menu_search"
         app:layout_constraintBaseline_toBaselineOf="@+id/searchViewFavorites"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/searchViewFavorites" />
+        app:layout_constraintStart_toEndOf="@+id/searchViewFavorites"
 
-    <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--        android:id="@+id/swipeContainer"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleMoviesFavorites"
@@ -62,7 +59,13 @@
         app:layout_constraintTop_toBottomOf="@+id/searchViewFavorites"
         tools:listitem="@layout/movie_item" />
 
-    <!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    <TextView
+        android:id="@+id/emptyViewFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/empty_list_movie"
+        android:visibility="gone" />
 
 
     <ProgressBar
@@ -70,6 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:indeterminateTint="@color/colorPrimary"
